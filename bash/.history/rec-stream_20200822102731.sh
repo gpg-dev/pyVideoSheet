@@ -10,9 +10,7 @@ log="$fn0.json.log"
 echo "$ts0: - recording stream $1 to $fn1" 
 echo 
 
-/usr/bin/python /usr/bin/streamlink chaturbate.com/$1 best -j -o $fn1  | tee $log
-#/usr/bin/python /usr/bin/streamlink chaturbate.com/$1 best -o $fn1 # | tee $log
-
+/usr/bin/python /usr/bin/streamlink chaturbate.com/$1 best -p vlc -r=$fn1 # | tee $log
 
 ts1="$(date +%Y%m%dT%H%M%S%Z)" 
 echo 
