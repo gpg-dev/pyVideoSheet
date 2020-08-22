@@ -6,5 +6,17 @@
 		{
 			"path": "pyVideoSheet"
 		}
-	]
+	],
+	"settings": {
+		"files.exclude": {
+			"**/.git": true,
+			"**/.svn": false,
+			"**/.hg": false,
+			"**/CVS": false,
+			"**/.DS_Store": false,
+			"**/.history": true,
+			".history": true
+		},
+		"explorerExclude.backup": null
+	}
 }
