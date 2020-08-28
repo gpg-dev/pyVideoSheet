@@ -5,6 +5,12 @@
 		},
 		{
 			"path": "pyVideoSheet"
+		},
+		{
+			"path": "video-thumbnail-generator"
+		},
+		{
+			"path": "vcsi"
 		}
 	],
 	"settings": {

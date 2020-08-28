@@ -24,7 +24,7 @@ mkdir -vp $recdir           | tee -ai $fflog
 
 ts1=$ts                                 # now
 fn0="$fn00--$ts1"                       # file name base for .rec.mkv file
-fn1="$fn0.rec.ts"
+fn1="$fn0.rec.mkv"
 ffn1="$recdir/$fn1"
 echo "$ts - ffn1  : - $recdir"    | tee -ai $fflog
 
@@ -38,16 +38,14 @@ echo "$ts - json  :" | tee -ai $fflog
 res=eval $cmd
 echo  $res | tee -ai $fflog
 
-cmd="/usr/bin/python /usr/bin/streamlink -p vlc  chaturbate.com/$1 best -o $ffn1" 
+cmd="/usr/bin/python /usr/bin/streamlink -p vlc  chaturbate.com/$1 best -r $ffn1" 
 
 #execute live rec command
-echo "$ts - info  : - recording cb stream $1 ..."   | tee -ai $fflog
-echo                                                | tee -ai $fflog
-res=eval $cmd                                       | tee -ai $fflog
-echo  $res                                          | tee -ai $fflog
+echo "$ts - info  : - recording cb stream $1 ..."  | tee -ai $fflog
+echo | tee -ai $fflog
+$cmd > $fflog
+#echo  $res | tee -ai $fflog
 
-## get timestamp "now"
-ts="$(date --utc +%Y%m%dT%H%M%S%Z)"     # all timestamps in Zulu (UTC) time
 
 ## after command finished
 echo | tee -ai $fflog
