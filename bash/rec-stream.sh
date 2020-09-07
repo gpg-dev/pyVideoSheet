@@ -17,6 +17,7 @@ ts="$(date --utc +%Y%m%dT%H%M%S%Z)"     # all timestamps in Zulu (UTC) time
 
 # set recording filename from 1-st (and only) input argument ($1 ... room name)
 recdir="$HOME/Videos/gpg/cb/recbot/live-rec"
+donedir="$HOME/Videos/gpg/cb/done"
 echo "$ts - fflog : - $fflog"     | tee -ai $fflog
 echo "$ts - recdir: - $recdir"    | tee -ai $fflog
 mkdir -vp $recdir           | tee -ai $fflog
@@ -51,11 +52,16 @@ ts="$(date --utc +%Y%m%dT%H%M%S%Z)"     # all timestamps in Zulu (UTC) time
 
 ## after command finished
 echo | tee -ai $fflog
-echo "$ts - info  : - no stream $1" | tee -ai $fflog
 
-ts2=$ts                                 # now
-fn2="$fn0-$ts2.mkv"
-ffn2="$recdir/$fn2"
-mv -v $ffn1  $ffn2 | tee -ai $fflog
-echo "$ts - mv    : - renamed $fn1 to $fn2" | tee -ai $fflog
-echo | tee -ai $fflog
+if [[-f $ffn1]]; then
+    echo "$ts - info  : - end of stream $1\n renaming and moving rec to $donedir" | tee -ai $fflog
+    ts2=$ts                                 # now
+    fn2="$fn0-$ts2.mkv"
+    ffn2="$donedir/$fn2"
+    mv -v $ffn1  $ffn2 | tee -ai $fflog
+    echo "$ts - mv    : - renamed $fn1 to $fn2" | tee -ai $fflog
+    echo | tee -ai $fflog
+else
+    echo "$ts - info  : - no stream found for $1" | tee -ai $fflog
+    echo | tee -ai $fflog
+fi
