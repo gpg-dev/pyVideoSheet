@@ -1,0 +1,10 @@
+<div class="modal-header">
+  <h4 class="modal-title" translate>Hey there!</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <p [translate]="'CONFIRM_PAYMENT_ALERT'" [translateParams]="{bookingPrice: bookingPrice}"></p>
+  <button class="btn btn-primary" type="button" (click)="pay()" [disabled]="loading" translate>Pay with paypal</button>
+</div>

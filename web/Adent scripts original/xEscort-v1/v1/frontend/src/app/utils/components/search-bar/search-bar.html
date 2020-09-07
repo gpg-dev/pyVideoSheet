@@ -1,0 +1,70 @@
+<div class="form-search">
+  <div class="container">
+    <div class="bg-search">
+      <div class="row">
+        <div class="col-md-10">
+          <div class="row">
+            <div class="col-sm-3">
+              <div class="form-input-s">
+                <i class="fa fa-map-marker"></i>
+                <select class="form-control" [(ngModel)]="filter.country" name="country">
+                  <option value="" selected translate>Country</option>
+                  <option *ngFor="let c of countries" [value]="c.code">{{c.name}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="form-input-s">
+                <i class="fa fa-building"></i>
+                <input type="text" [(ngModel)]="filter.city" placeholder="City" class="form-control" name="city" />
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="form-input-s">
+                <i class="fa fa-user"></i>
+                <input type="text" [(ngModel)]="filter.username" class="form-control" placeholder="{{'Search by showname'|translate}}" name="username" />
+              </div>
+            </div>
+
+            <div class="col-sm-12">
+              <div class="filter-search">
+                <label class="check-box"><span translate>Real Pics</span>
+                  <input type="checkbox" name="realPics" [(ngModel)]="filter.realPics" />
+                  <span class="checkmark"></span>
+                </label>
+                <label class="check-box"><span translate>Verified Contact Details</span>
+                  <input type="checkbox" name="verifiedContact" [(ngModel)]="filter.verifiedContact" />
+                  <span class="checkmark"></span>
+                </label>
+                <label class="check-box"><span translate>With Video</span>
+                  <input type="checkbox" name="withVideo" [(ngModel)]="filter.withVideo" />
+                  <span class="checkmark"></span>
+                </label>
+                <label class="check-box"><span translate>Pornstar</span>
+                  <input type="checkbox" name="pornstar" [(ngModel)]="filter.pornstar" />
+                  <span class="checkmark"></span>
+                </label>
+                <label class="check-box"><span translate>Online</span>
+                  <input type="checkbox" name="online" [(ngModel)]="filter.online" />
+                  <span class="checkmark"></span>
+                </label>
+                <label class="check-box"><span translate>Available for Travel</span>
+                  <input type="checkbox" [(ngModel)]="filter.availableTravel" name="availableTravel" />
+                  <span class="checkmark"></span>
+                </label>
+                <label class="check-box"><span translate>Natural Photos</span>
+                  <input type="checkbox" name="NaturalPhoto" [(ngModel)]="filter.naturalPhoto" />
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2  text-right">
+          <p class="mar-bot-12"><button class="btn btn-danger" type="button" (click)="search()"><i class="fa fa-search"></i> {{'SEARCH'|translate}}</button></p>
+          <p class="advance-text"><a [routerLink]="['/escorts/filter/latest']">{{'Go to Advanced Search'|translate}} <i class="fa fa-angle-right"></i></a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

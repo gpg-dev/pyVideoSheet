@@ -1,0 +1,16 @@
+<div class="modal-header">
+  <h4 class="modal-title rating-title">
+    <span translate>Do you think i am so hot?</span>
+
+    <div class="rating-vote">
+      <ngb-rating [(rate)]="selectedStar" (hover)="hovered=$event" max="5"></ngb-rating>
+    </div>
+  </h4>
+</div>
+<div class="modal-body">
+  <textarea rows="3" class="form-control" [(ngModel)]="comment" placeholder="{{'Leave some text here'|translate}}"></textarea>
+</div>
+<div class="modal-footer">
+  <div class="btn btn-success pull-left" (click)="rateStar()" translate>Submit</div>
+  <div class="btn btn-primary pull-right" (click)="activeModal.close('Close click')" translate>Cancel</div>
+</div>

@@ -1,0 +1,22 @@
+<div class="padding-main" *ngIf="filter === 'featured'">
+  <div class="title-main">
+    <h2 translate>Featured escorts</h2>
+    <p translate>Find our featured escorts</p>
+  </div>
+  <list-escorts [filter]="filter"></list-escorts>
+</div>
+
+<div class="padding-main" *ngIf="filter === 'latest'">
+  <div class="title-main">
+    <h2 translate>New escorts</h2>
+    <p translate>New escorts just have registered</p>
+  </div>
+  <list-escorts [filter]="filter"></list-escorts>
+</div>
+
+<div class="padding-main" *ngIf="filter === 'search'">
+  <div class="title-main">
+    <h2 translate>Search results</h2>
+  </div>
+  <list-escorts [filter]="filter" [searchQuery]="searchQuery"></list-escorts>
+</div>

@@ -1,0 +1,117 @@
+<div class="padding-main">
+  <div class="container">
+    <div class="title-detail">
+      <div class="pull-left">
+        <h2 *ngIf="!editFields.name">{{profile.name || ('Enter your name'|translate)}}</h2>
+        <h2 *ngIf="editFields.name">
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="{{'Name'|translate}}" [(ngModel)]="profileEdit.name" name="name" />
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary" type="button" (click)="updateData('name', ['name'])" translate>Save</button>
+            </div>
+          </div>
+        </h2>
+        <span class="status online"><i class="fa fa-check-circle"></i></span>
+        <span>
+          <a (click)="editFields.name = true"><i class="fa fa-pencil"></i></a>
+        </span>
+      </div>
+
+      <p class="text-center" [hidden]="profile.subscribed">
+        <span translate>To Unlock & View Escort Phone numbers - You can pay monthly Subscription - Get all Verified Phone numbers Instantly.</span>
+        <a [routerLink]="['/payment/subscribe']" class="btn btn-primary" translate>Subscribe now</a>
+      </p>
+    </div>
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="slider-for">
+          <div class="item-pic">
+            <img [src]="profile?.avatarUrl" />
+
+            <div class="upload-avatar">
+              <file-upload [options]="avatarOption"></file-upload>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-8">
+        <div class="title-1">
+          <span translate>Password</span>
+
+          <a (click)="editFields.password = true" class="pull-right" *ngIf="!editFields.password"><i class="fa fa-pencil"></i></a>
+          <button class="btn btn-success pull-right" (click)="updatePassword()" *ngIf="editFields.password" translate>Save</button>
+        </div>
+        <div class="body-box" [hidden]="!editFields.password">
+          <input type="password" class="form-control" name="password" [(ngModel)]="newPassword" placeholder="Enter your strong password" />
+        </div>
+        <div class="title-1">
+          <span translate>Biography</span>
+
+          <a (click)="editFields.bio = true" class="pull-right" *ngIf="!editFields.bio"><i class="fa fa-pencil"></i></a>
+          <button class="btn btn-success pull-right" (click)="updateData('bio', ['gender', 'age', 'orientation', 'serviceFor', 'languages'])" *ngIf="editFields.bio">Save</button>
+        </div>
+        <div class="body-box">
+          <div class="row">
+            <div class="col-sm-6">
+              <table class="table-1">
+                <tr>
+                  <td translate>Gender:</td>
+                  <td class="text-v">
+                    <span [hidden]="editFields.bio">{{profile.gender || ('Unknown'|translate)}}</span>
+                    <select class="form-control" [(ngModel)]="profileEdit.gender" name="gender" [hidden]="!editFields.bio">
+                      <option value="male" translate>Male</option>
+                      <option value="female" translate>Female</option>
+                      <option value="transgender" translate>Transgender</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td translate>Age:</td>
+                  <td class="text-v">
+                    <span [hidden]="editFields.bio">{{profile.age}}</span>
+                    <input type="number" [(ngModel)]="profileEdit.age" name="age" min="18" class="form-control" placeholder="{{'Enter your age'|translate}}" [hidden]="!editFields.bio" />
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="title-1">
+          <span translate>About me</span>
+          <a (click)="editFields.about = true" class="pull-right" *ngIf="!editFields.about"><i class="fa fa-pencil"></i></a>
+          <button class="btn btn-success pull-right" (click)="updateData('about', ['about'])" *ngIf="editFields.about" translate>Save</button>
+        </div>
+        <div class="body-box">
+          <p [hidden]="editFields.about">
+            {{profile.about || ('Please enter some info'|translate)}}
+          </p>
+          <textarea [(ngModel)]="profileEdit.about" class="form-control" placeholder="{{'Enter some information about you'|translate}}" [hidden]="!editFields.about"></textarea>
+        </div>
+        <div class="title-1">
+          <span translate>Contact</span>
+
+          <a (click)="editFields.contact = true" class="pull-right" *ngIf="!editFields.contact"><i class="fa fa-pencil"></i></a>
+          <button class="btn btn-success pull-right" (click)="updateData('contact', ['baseCity', 'firstName'])" *ngIf="editFields.contact" translate>Save</button>
+        </div>
+        <div class="body-box">
+          <table class="table-1">
+            <tr>
+              <td translate>Base city:</td>
+              <td>
+                <span [hidden]="editFields.contact">{{profile.baseCity}}</span>
+                <input type="text" [(ngModel)]="profileEdit.baseCity" name="baseCity" class="form-control" placeholder="{{'Enter your city'|translate}}" [hidden]="!editFields.contact" />
+              </td>
+            </tr>
+            <tr>
+              <td translate>First contact:</td>
+              <td>
+                <span [hidden]="editFields.contact">{{profile.firstName}}</span>
+                <input type="text" [(ngModel)]="profileEdit.firstName" name="firstName" class="form-control" placeholder="{{'Enter your first name'|translate}}" [hidden]="!editFields.contact" />
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

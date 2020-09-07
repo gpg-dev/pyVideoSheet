@@ -1,0 +1,28 @@
+<div class="table-responsive">
+  <h3 translate>Payment history</h3>
+  <table class="table table-strip">
+    <thead>
+      <tr>
+        <th translate>Description</th>
+        <th translate>Price</th>
+        <th translate>Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of items">
+        <td>{{item.description}}</td>
+        <td>${{item.price|number}}</td>
+        <td>{{item.createdAt|date}}</td>
+      </tr>
+    </tbody>
+    <tfoot [hidden]="total <= 10">
+      <tr>
+        <td colspan="2">
+          <nav aria-label="Page navigation" [hidden]="!total">
+            <ngb-pagination [collectionSize]="total" [(page)]="page" [maxSize]="5" (pageChange)="query()"></ngb-pagination>
+          </nav>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</div>

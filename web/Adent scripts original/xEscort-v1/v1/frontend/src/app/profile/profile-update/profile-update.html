@@ -1,0 +1,5 @@
+<escort-profile-update *ngIf="profile?.type === 'escort'"
+  [profile]="profile"></escort-profile-update>
+
+<user-profile-update [profile]="profile"
+  *ngIf="profile?.type === 'user'"></user-profile-update>

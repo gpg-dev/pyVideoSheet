@@ -1,0 +1,18 @@
+{% extends 'layouts/default.html' %}
+
+{% block content %}
+<p>Hello {{ user.name }}</p>
+
+<p>
+  You have a new message below.
+
+  <br/>
+  
+  <span><strong>From: </strong> {{ user.name }}</span>
+  <span><strong>Email: </strong> {{ user.email }}</span>
+  <span><strong>Content: </strong></span> <br />
+  <pre>
+    {{ message.content }}
+  </pre>
+</p>
+{% endblock %}

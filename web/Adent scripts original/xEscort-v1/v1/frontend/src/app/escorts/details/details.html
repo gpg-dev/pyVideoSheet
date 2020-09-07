@@ -1,0 +1,262 @@
+<div class="padding-main">
+  <div class="container">
+    <div class="title-detail">
+      <div class="pull-left">
+        <h2>{{escort?.username}}</h2>
+        <span class="status online"><i class="fa fa-check-circle"></i></span>
+        <div class="list-star">
+          <i class="fa fa-star" [ngClass]="{'active': escort?.ratingAvg> 0}"></i>
+          <i class="fa fa-star" [ngClass]="{'active': escort?.ratingAvg> 1}"></i>
+          <i class="fa fa-star" [ngClass]="{'active': escort?.ratingAvg> 2}"></i>
+          <i class="fa fa-star" [ngClass]="{'active': escort?.ratingAvg> 3}"></i>
+          <i class="fa fa-star" [ngClass]="{'active': escort?.ratingAvg> 4}"></i>
+          <span class="rating-number">{{escort?.ratingAvg|number:'1.1'}}</span>
+        </div>
+      </div>
+      <div class="pull-right">
+        <div class="phone-title"><img src="/assets/images/phone.png">{{escort?.phoneNumber}}</div>
+        <send-escort-message [escort]="escort"></send-escort-message>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="slider-for">
+          <div class="item-pic">
+            <img [src]="showImage" />
+          </div>
+        </div>
+        <div class="slider-nav slide-profile" *ngIf="media?.length > 1">
+          <ngx-slick-carousel class="carousel" #slickModal="slick-carousel" [config]="slideConfig">
+            <div class="item-pic" ngxSlickItem *ngFor="let pic of media" (click)="showImage= pic.mediumUrl">
+              <img [src]="pic.thumbUrl" />
+            </div>
+          </ngx-slick-carousel>
+        </div>
+        <div class="title-1"><span translate>Incall Rates</span></div>
+        <div class="body-box">
+          <table class="table-1">
+            <tr *ngFor="let rate of escort?.rates">
+              <td class="capitalize"><i class="fa fa-clock-o"></i>{{rate.text}}:</td>
+              <td>${{rate.price|number}}</td>
+            </tr>
+          </table>
+        </div>
+        <div class="title-1"><span translate>Travel Rates & Conditions</span></div>
+        <div class="body-box">
+          <p translate>Travel Destinations</p>
+          <p translate>Nationwide</p>
+        </div>
+      </div>
+      <div class="col-sm-8">
+        <div class="title-1"><span translate>Biography</span></div>
+        <div class="body-box">
+          <div class="row">
+            <div class="col-sm-6">
+              <table class="table-1">
+                <tr>
+                  <td translate>Gender:</td>
+                  <td class="text-v capitalize">{{escort?.gender}}</td>
+                </tr>
+                <tr>
+                  <td translate>Age:</td>
+                  <td class="text-v">{{escort?.age}}</td>
+                </tr>
+                <tr>
+                  <td translate>Service for:</td>
+                  <td class="text-v capitalize">{{escort?.serviceFor}}</td>
+                </tr>
+
+              </table>
+            </div>
+            <div class="col-sm-6">
+              <table class="table-1">
+                <tr>
+                  <td translate>Orientation:</td>
+                  <td class="text-v capitalize">{{escort?.orientation}}</td>
+                </tr>
+                <tr>
+                  <td translate>Languages:</td>
+                  <td class="text-v">
+                    <span *ngFor="let lang of languages">{{lang.name}}</span>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="title-1"><span translate>About me</span></div>
+        <div class="body-box">{{escort?.about}}</div>
+        <div class="title-1"><span translate>Contact Us</span></div>
+        <div class="body-box">
+          <table class="table-1">
+            <tr>
+              <td translate>Base city:</td>
+              <td>{{escort?.baseCity}}</td>
+            </tr>
+            <tr>
+              <td translate>Phone:</td>
+              <td>{{escort?.phoneNumber}}</td>
+            </tr>
+            <tr>
+              <td translate>Private message:</td>
+              <td>
+                <send-escort-message [escort]="escort"></send-escort-message>
+              </td>
+            </tr>
+            <tr>
+              <td translate>First contact:</td>
+              <td>{{escort?.firstName}}</td>
+            </tr>
+          </table>
+        </div>
+        <div class="title-reviews">
+          <div class="title-1"><span translate>Reviews</span></div>
+          <div class="num-review-1">{{escort?.totalRating}} <span translate>reviews</span></div>
+          <rating-button [escortId]="escort?._id" (onRating)="onRating($event)"></rating-button>
+        </div>
+        <div class="body-box">
+          <table class="table-comment">
+            <tbody>
+              <tr *ngFor="let item of reviews">
+                <td>{{item.updatedAt | date: 'medium'}}</td>
+                <td><a href="#"><strong>{{item.rater ? item.rater.name : 'anonymous'}}</strong></a></td>
+                <td>
+                  <div class="list-star">
+                    <i class="fa fa-star" [ngClass]="{'active': item.rating > 0}"></i>
+                    <i class="fa fa-star" [ngClass]="{'active': item.rating > 1}"></i>
+                    <i class="fa fa-star" [ngClass]="{'active': item.rating > 2}"></i>
+                    <i class="fa fa-star" [ngClass]="{'active': item.rating > 3}"></i>
+                    <i class="fa fa-star" [ngClass]="{'active': item.rating > 4}"></i>
+                  </div>
+                </td>
+                <td>{{item?.comment}}</td>
+              </tr>
+            </tbody>
+          </table>
+          <button class="btn btn-outline-primary btn-sm" (click)="viewAllReview(escort._id)" translate>View all reviews</button>
+        </div>
+        <div class="title-1"><span translate>Available</span></div>
+        <div class="body-box">
+          <table class="table">
+            <tr>
+              <td translate>Day</td>
+              <td translate>Start time</td>
+              <td colspan="2" translate>End time</td>
+            </tr>
+            <tr>
+              <td translate>Sunday</td>
+              <td>{{escort?.availableTime['0']?.from | m2h}}</td>
+              <td>{{escort?.availableTime['0']?.to | m2h}}</td>
+              <td>
+                <span class="badge badge-danger" *ngIf="!escort?.availableTime['0']?.available" translate>Not available</span>
+                <a class="btn btn-danger btn-sm" [routerLink]="['/booking/escorts', escort?.username]" *ngIf="escort?.availableTime['0']?.available" translate>BOOKING</a>
+              </td>
+            </tr>
+            <tr>
+              <td translate>Monday</td>
+              <td>{{escort?.availableTime['1']?.from | m2h}}</td>
+              <td>{{escort?.availableTime['1']?.to | m2h}}</td>
+              <td>
+                <span class="badge badge-danger" *ngIf="!escort?.availableTime['1']?.available" translate>Not available</span>
+                <a class="btn btn-danger btn-sm" [routerLink]="['/booking/escorts', escort?.username]" *ngIf="escort?.availableTime['1']?.available" translate>BOOKING</a>
+              </td>
+            </tr>
+            <tr>
+              <td translate>Tuesday</td>
+              <td>{{escort?.availableTime['2']?.from | m2h}}</td>
+              <td>{{escort?.availableTime['2']?.to | m2h}}</td>
+              <td>
+                <span class="badge badge-danger" *ngIf="!escort?.availableTime['2']?.available" translate>Not available</span>
+                <a class="btn btn-danger btn-sm" [routerLink]="['/booking/escorts', escort?.username]" *ngIf="escort?.availableTime['2']?.available" translate>BOOKING</a>
+              </td>
+            </tr>
+            <tr>
+              <td translate>Wednesday</td>
+              <td>{{escort?.availableTime['3']?.from | m2h}}</td>
+              <td>{{escort?.availableTime['3']?.to | m2h}}</td>
+              <td>
+                <span class="badge badge-danger" *ngIf="!escort?.availableTime['3']?.available" translate>Not available</span>
+                <a class="btn btn-danger btn-sm" [routerLink]="['/booking/escorts', escort?.username]" *ngIf="escort?.availableTime['3']?.available" translate>BOOKING</a>
+              </td>
+            </tr>
+            <tr>
+              <td translate>Thursday</td>
+              <td>{{escort?.availableTime['4']?.from | m2h}}</td>
+              <td>{{escort?.availableTime['4']?.to | m2h}}</td>
+              <td>
+                <span class="badge badge-danger" *ngIf="!escort?.availableTime['4']?.available" translate>Not available</span>
+                <a class="btn btn-danger btn-sm" [routerLink]="['/booking/escorts', escort?.username]" *ngIf="escort?.availableTime['4']?.available" translate>BOOKING</a>
+              </td>
+            </tr>
+            <tr>
+              <td translate>Friday</td>
+              <td>{{escort?.availableTime['5']?.from | m2h}}</td>
+              <td>{{escort?.availableTime['5']?.to | m2h}}</td>
+              <td>
+                <span class="badge badge-danger" *ngIf="!escort?.availableTime['5']?.available" translate>Not available</span>
+                <a class="btn btn-danger btn-sm" [routerLink]="['/booking/escorts', escort?.username]" *ngIf="escort?.availableTime['5']?.available" translate>BOOKING</a>
+              </td>
+            </tr>
+            <tr>
+              <td translate>Saturday</td>
+              <td>{{escort?.availableTime['6']?.from | m2h}}</td>
+              <td>{{escort?.availableTime['6']?.to | m2h}}</td>
+              <td>
+                <span class="badge badge-danger" *ngIf="!escort?.availableTime['6']?.available" translate>Not available</span>
+                <a class="btn btn-danger btn-sm" [routerLink]="['/booking/escorts', escort?.username]" *ngIf="escort?.availableTime['6']?.available" translate>BOOKING</a>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="title-1">
+      <h4><span translate>Other escorts</span></h4>
+    </div>
+    <div class="body-box">
+      <div class="list-model row">
+        <div class="col-sm-4 col-md-3" *ngFor="let item of others">
+          <div class="item-model">
+            <div class="pic-model">
+              <img [src]="item.avatarUrl">
+            </div>
+            <div class="text-model">
+              <div class="title-model">
+                <h3>{{item.username}}
+                  <span class="age-item">{{item.age}}</span>
+                  <span class="status online"><i class="fa fa-check-circle"></i></span>
+                </h3>
+
+                <span class="phone-item" *ngIf="item.phoneVerified"><img src="/assets/images/phone.png"></span>
+              </div>
+              <div class="price-item">
+                <span *ngIf="item.minRate">{{item?.rates[1]?.price|number}}/1h</span>
+                <span *ngIf="!item.minRate">0.00</span>
+              </div>
+              <div class="language-item">
+                <i class="fa fa-map-marker"></i>
+                {{item.baseCity ? item.baseCity : 'N/A'}}
+              </div>
+              <div class="star-v">
+                <div class="list-star">
+                  <i class="fa fa-star" [ngClass]="{'active': item.ratingAvg>
+                    0}"></i>
+                  <i class="fa fa-star" [ngClass]="{'active': item.ratingAvg>
+                    1}"></i>
+                  <i class="fa fa-star" [ngClass]="{'active': item.ratingAvg>
+                    2}"></i>
+                  <i class="fa fa-star" [ngClass]="{'active': item.ratingAvg>
+                    3}"></i>
+                  <i class="fa fa-star" [ngClass]="{'active': item.ratingAvg>
+                    4}"></i>
+                </div>
+                <span class="number-review">{{item?.totalRating}} reviews</span>
+              </div>
+            </div>
+            <a [routerLink]="['/escorts', item.username]"></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

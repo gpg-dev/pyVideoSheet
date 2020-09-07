@@ -1,0 +1,482 @@
+<div class="padding-main">
+  <div class="container">
+    <div class="title-detail">
+      <div class="pull-left">
+        <h2 *ngIf="!editFields.name">{{profile.name || ('Enter your name'|translate)}}</h2>
+        <h2 *ngIf="editFields.name">
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Name" [(ngModel)]="profileEdit.name" name="name" />
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary" type="button" (click)="updateData('name', ['name'])" translate>Save</button>
+            </div>
+          </div>
+        </h2>
+        <span class="status online"><i class="fa fa-check-circle"></i></span>
+        <span>
+          <a (click)="editFields.name = true"><i class="fa fa-pencil"></i></a>
+        </span>
+        <div class="list-star">
+          <i class="fa fa-star" [ngClass]="{'active': profile.ratingAvg > 0}"></i>
+          <i class="fa fa-star" [ngClass]="{'active': profile.ratingAvg > 1}"></i>
+          <i class="fa fa-star" [ngClass]="{'active': profile.ratingAvg > 2}"></i>
+          <i class="fa fa-star" [ngClass]="{'active': profile.ratingAvg > 3}"></i>
+          <i class="fa fa-star" [ngClass]="{'active': profile.ratingAvg > 4}"></i>
+          <span>{{profile?.ratingAvg}}</span>
+        </div>
+      </div>
+      <div class="pull-right">
+        <div class="phone-title">
+          <i class="fa fa-phone"></i>
+          <span>
+            {{profile?.phoneNumber}}
+
+            <i class="fa" [ngClass]="{
+              'fa-times red': !profile?.phoneVerified,
+              'fa-check': profile?.phoneVerified
+            }"></i>
+          </span>
+        </div>
+        <a (click)="changePhone()"><i class="fa fa-pencil"></i></a>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="slider-for">
+          <div class="item-pic">
+            <img [src]="profile?.avatarUrl" />
+
+            <div class="upload-avatar">
+              <file-upload [options]="avatarOption"></file-upload>
+            </div>
+          </div>
+        </div>
+        <div class="slider-nav mar-top-80">
+          <div class="item-pic">
+            <file-upload [options]="imageOption" *ngIf="media.length < 10"></file-upload>
+          </div>
+          <div class="row">
+            <div class="col col-md-4" *ngFor="let photo of media; let i = index">
+              <div class="item-pic">
+                <a (click)="removeMedia(photo, i)" class="trash-btn" title="Remove image">
+                  <i class="fa fa-trash"></i>
+                </a>
+                <div class="upload-thumbnail">
+                  <img [src]="photo.thumbUrl">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="title-1">
+          <span translate>Incall Rates</span>
+
+          <a (click)="editFields.rates = true" class="pull-right" *ngIf="!editFields.rates"><i class="fa fa-pencil"></i></a>
+          <button class="btn btn-success pull-right" (click)="updateData('rates', ['rates'])" *ngIf="editFields.rates" translate>Save</button>
+        </div>
+        <div class="body-box">
+          <table class="table-1" [hidden]="editFields.rates">
+            <tr *ngFor="let rate of profile?.rates">
+              <td><i class="fa fa-clock-o"></i>{{rate.text}}</td>
+              <td>${{rate.price ? rate.price : 0}}</td>
+              <td [hidden]="!editFields.rates"></td>
+            </tr>
+          </table>
+
+          <table class="table-1" [hidden]="!editFields.rates">
+            <tr *ngFor="let rate of profileEdit.rates; let i = index">
+              <td><i class="fa fa-clock-o"></i>{{rate.text}}</td>
+              <td>
+                <input type="number" [(ngModel)]="profileEdit.rates[i].price" name="rate{{i}}" class="form-control" min="0" placeholder="100" />
+              </td>
+              <td></td>
+            </tr>
+          </table>
+        </div>
+        <div class="title-1">
+          <span translate>Travel Rates & Conditions</span>
+
+          <a (click)="editFields.travel = true" class="pull-right" *ngIf="!editFields.travel"><i class="fa fa-pencil"></i></a>
+          <button class="btn btn-success pull-right" (click)="updateData('travel', ['availableTravel'])" *ngIf="editFields.travel" translate>Save</button>
+        </div>
+        <div class="body-box">
+          <p>
+            <span>Available for travel:</span>
+
+            <span [hidden]="editFields.travel">
+              <span class="badge badge-success" [hidden]="!profile.availableTravel" translate>Yes</span>
+              <span class="badge badge-danger" [hidden]="profile.availableTravel" translate>No</span>
+            </span>
+            <label [hidden]="!editFields.travel">
+              <input type="checkbox" [(ngModel)]="profileEdit.availableTravel" name="availableTravel" />
+            </label>
+          </p>
+        </div>
+      </div>
+      <div class="col-sm-8">
+        <div class="title-1">
+          <span translate>Password</span>
+
+          <a (click)="editFields.password = true" class="pull-right" *ngIf="!editFields.password"><i class="fa fa-pencil"></i></a>
+          <button class="btn btn-success pull-right" (click)="updatePassword()" *ngIf="editFields.password" translate>Save</button>
+        </div>
+        <div class="body-box" [hidden]="!editFields.password">
+          <input type="password" class="form-control" name="password" [(ngModel)]="newPassword" placeholder="Enter your strong password" />
+        </div>
+        <div class="title-1">
+          <span translate>Biography</span>
+
+          <a (click)="editFields.bio = true" class="pull-right" *ngIf="!editFields.bio"><i class="fa fa-pencil"></i></a>
+          <button class="btn btn-success pull-right" (click)="updateData('bio', ['gender', 'age', 'orientation', 'serviceFor', 'languages'])" *ngIf="editFields.bio" translate>Save</button>
+        </div>
+        <div class="body-box">
+          <div class="row">
+            <div class="col-sm-6">
+              <table class="table-1">
+                <tr>
+                  <td translate>Gender:</td>
+                  <td class="text-v">
+                    <span [hidden]="editFields.bio">{{profile.gender || ('Unknown'|translate)}}</span>
+                    <select class="form-control" [(ngModel)]="profileEdit.gender" name="gender" [hidden]="!editFields.bio">
+                      <option value="male" translate>Male</option>
+                      <option value="female" translate>Female</option>
+                      <option value="transgender" translate>Transgender</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td translate>Age:</td>
+                  <td class="text-v">
+                    <span [hidden]="editFields.bio">{{profile.age}}</span>
+                    <input type="number" [(ngModel)]="profileEdit.age" name="age" min="18" class="form-control" placeholder="Enter your age" [hidden]="!editFields.bio" />
+                  </td>
+                </tr>
+                <tr>
+                  <td translate>Service for:</td>
+                  <td class="text-v">
+                    <span [hidden]="editFields.serviceFor" [hidden]="editFields.bio">{{profile.serviceFor || ('Unknown'|translate)}}</span>
+                    <select class="form-control" [(ngModel)]="profileEdit.serviceFor" name="serviceFor" [hidden]="!editFields.bio">
+                      <option value="male" translate>Male</option>
+                      <option value="female" translate>Female</option>
+                      <option value="transgender" translate>Transgender</option>
+                    </select>
+                  </td>
+                </tr>
+
+              </table>
+            </div>
+            <div class="col-sm-6">
+              <table class="table-1">
+                <tr>
+                  <td translate>Orientation:</td>
+                  <td class="text-v">
+                    <span [hidden]="editFields.bio">{{profile.orientation || ('Unknown'|translate)}}</span>
+                    <select class="form-control" [(ngModel)]="profileEdit.orientation" name="orientation" [hidden]="!editFields.bio">
+                      <option value="heterosexual" translate>Heterosexual</option>
+                      <option value="bisexual" translate>Bisexual</option>
+                      <option value="promiscuity" translate>Promiscuity</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td translate>Languages:</td>
+                  <td class="text-v">
+                    <span [hidden]="editFields.bio">
+                      <span *ngFor="let lang of profile?.languages">{{lang}}</span>
+                    </span>
+                    <ng-select [items]="languages" [addTag]="false" [hideSelected]="true" multiple="true" bindLabel="name" [(ngModel)]="selectedLangauges" [ngModelOptions]="{standalone: true}" [hidden]="!editFields.bio">
+                    </ng-select>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="title-1">
+          <span translate>About me</span>
+          <a (click)="editFields.about = true" class="pull-right" *ngIf="!editFields.about"><i class="fa fa-pencil"></i></a>
+          <button class="btn btn-success pull-right" (click)="updateData('about', ['about'])" *ngIf="editFields.about" translate>Save</button>
+        </div>
+        <div class="body-box">
+          <p [hidden]="editFields.about">
+            {{profile.about || ('Please enter some info'|translate)}}
+          </p>
+          <textarea [(ngModel)]="profileEdit.about" class="form-control" placeholder="{{'Enter some information about you'|translate}}" [hidden]="!editFields.about"></textarea>
+        </div>
+        <div class="title-1">
+          <span translate>Contact</span>
+
+          <a (click)="editFields.contact = true" class="pull-right" *ngIf="!editFields.contact"><i class="fa fa-pencil"></i></a>
+          <button class="btn btn-success pull-right" (click)="updateData('contact', ['baseCity', 'firstName'])" *ngIf="editFields.contact" translate>Save</button>
+        </div>
+        <div class="body-box">
+          <table class="table-1">
+            <tr>
+              <td translate>Base city:</td>
+              <td>
+                <span [hidden]="editFields.contact">{{profile.baseCity}}</span>
+                <input type="text" [(ngModel)]="profileEdit.baseCity" name="baseCity" class="form-control" placeholder="Enter your city" [hidden]="!editFields.contact" />
+              </td>
+            </tr>
+            <tr>
+              <td translate>Phone:</td>
+              <td>{{profile.phoneNumber || ('Enter your phone'|translate)}}</td>
+            </tr>
+            <tr>
+              <td translate>First contact:</td>
+              <td>
+                <span [hidden]="editFields.contact">{{profile.firstName}}</span>
+                <input type="text" [(ngModel)]="profileEdit.firstName" name="firstName" class="form-control" placeholder="{{'Enter your first name'|translate}}" [hidden]="!editFields.contact" />
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="title-1">
+          <span translate>Available</span>
+
+          <a (click)="editFields.available = true" class="pull-right" *ngIf="!editFields.available"><i class="fa fa-pencil"></i></a>
+          <button class="btn btn-success pull-right" (click)="updateData('available', ['availableTime'])" *ngIf="editFields.available" translate>Save</button>
+        </div>
+        <div class="body-box">
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th translate>Available?</th>
+                  <th translate>From</th>
+                  <th translate>To</th>
+                </tr>
+              </thead>
+              <tbody *ngIf="profileEdit?.availableTime">
+                <tr>
+                  <td>
+                    <strong translate>Sunday</strong>
+                  </td>
+                  <td>
+                    <div class="form-group">
+                      <span [hidden]="editFields.available">
+                        <span class="badge badge-success" *ngIf="profile.availableTime['0'].available" translate>Yes</span>
+                        <span class="badge badge-danger" *ngIf="!profile.availableTime['0'].available" translate>No</span>
+                      </span>
+                      <label [hidden]="!editFields.available">
+                        <input type="checkbox" [(ngModel)]="profileEdit.availableTime['0'].available" name="c0" />
+                      </label>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-group">
+                      <span [hidden]="editFields.available">{{profileEdit.availableTime['0'].from | m2h}}</span>
+                      <select class="form-control" name="sel" [(ngModel)]="profileEdit.availableTime['0'].from" [hidden]="!editFields.available">
+                        <option *ngFor="let m of minutes" [ngValue]="m.value">{{m.text}}</option>
+                      </select>
+
+                    </div>
+                  </td>
+                  <td>
+                    <span [hidden]="editFields.available">{{profileEdit.availableTime['0'].to | m2h}}</span>
+                    <select class="form-control" name="sel" [(ngModel)]="profileEdit.availableTime['0'].to" [hidden]="!editFields.available">
+                      <option *ngFor="let m of minutes" [ngValue]="m.value">{{m.text}}</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong translate>Monday</strong>
+                  </td>
+                  <td>
+                    <div class="form-group">
+                      <span [hidden]="editFields.available">
+                        <span class="badge badge-success" *ngIf="profile.availableTime['1'].available" translate>Yes</span>
+                        <span class="badge badge-danger" *ngIf="!profile.availableTime['1'].available" translate>No</span>
+                      </span>
+                      <label [hidden]="!editFields.available">
+                        <input type="checkbox" [(ngModel)]="profileEdit.availableTime['1'].available" name="c1" />
+                      </label>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-group">
+                      <span [hidden]="editFields.available">{{profileEdit.availableTime['1'].from | m2h}}</span>
+                      <select class="form-control" name="self1" [(ngModel)]="profileEdit.availableTime['1'].from" [hidden]="!editFields.available">
+                        <option *ngFor="let m of minutes" [ngValue]="m.value">{{m.text}}</option>
+                      </select>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-group">
+                      <span [hidden]="editFields.available">{{profileEdit.availableTime['1'].to | m2h}}</span>
+                      <select class="form-control" name="selt1" [(ngModel)]="profileEdit.availableTime['1'].to" [hidden]="!editFields.available">
+                        <option *ngFor="let m of minutes" [ngValue]="m.value">{{m.text}}</option>
+                      </select>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong translate>Tuesday</strong>
+                  </td>
+                  <td>
+                    <div class="form-group">
+                      <span [hidden]="editFields.available">
+                        <span class="badge badge-success" *ngIf="profile.availableTime['2'].available" translate>Yes</span>
+                        <span class="badge badge-danger" *ngIf="!profile.availableTime['2'].available" translate>No</span>
+                      </span>
+                      <label [hidden]="!editFields.available">
+                        <input type="checkbox" [(ngModel)]="profileEdit.availableTime['2'].available" name="c2" />
+                      </label>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-group">
+                      <span [hidden]="editFields.available">{{profileEdit.availableTime['2'].from | m2h}}</span>
+                      <select class="form-control" name="self2" [(ngModel)]="profileEdit.availableTime['2'].from" [hidden]="!editFields.available">
+                        <option *ngFor="let m of minutes" [ngValue]="m.value">{{m.text}}</option>
+                      </select>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-group">
+                      <span [hidden]="editFields.available">{{profileEdit.availableTime['2'].to | m2h}}</span>
+                      <select class="form-control" name="selt2" [(ngModel)]="profileEdit.availableTime['2'].to" [hidden]="!editFields.available">
+                        <option *ngFor="let m of minutes" [ngValue]="m.value">{{m.text}}</option>
+                      </select>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong translate>Wednesday</strong>
+                  </td>
+                  <td>
+                    <div class="form-group">
+                      <span [hidden]="editFields.available">
+                        <span class="badge badge-success" *ngIf="profile.availableTime['3'].available" translate>Yes</span>
+                        <span class="badge badge-danger" *ngIf="!profile.availableTime['3'].available" translate>No</span>
+                      </span>
+                      <label [hidden]="!editFields.available">
+                        <input type="checkbox" [(ngModel)]="profileEdit.availableTime['3'].available" name="c3" />
+                      </label>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-group">
+                      <span [hidden]="editFields.available">{{profileEdit.availableTime['3'].from | m2h}}</span>
+                      <select class="form-control" name="self3" [(ngModel)]="profileEdit.availableTime['3'].from" [hidden]="!editFields.available">
+                        <option *ngFor="let m of minutes" [ngValue]="m.value">{{m.text}}</option>
+                      </select>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-group">
+                      <span [hidden]="editFields.available">{{profileEdit.availableTime['3'].to | m2h}}</span>
+                      <select class="form-control" name="selt3" [(ngModel)]="profileEdit.availableTime['3'].to" [hidden]="!editFields.available">
+                        <option *ngFor="let m of minutes" [ngValue]="m.value">{{m.text}}</option>
+                      </select>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong translate>Thursday</strong>
+                  </td>
+                  <td>
+                    <div class="form-group">
+                      <span [hidden]="editFields.available">
+                        <span class="badge badge-success" *ngIf="profile.availableTime['4'].available" translate>Yes</span>
+                        <span class="badge badge-danger" *ngIf="!profile.availableTime['4'].available" translate>No</span>
+                      </span>
+                      <label [hidden]="!editFields.available">
+                        <input type="checkbox" [(ngModel)]="profileEdit.availableTime['4'].available" name="c4" />
+                      </label>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-group">
+                      <span [hidden]="editFields.available">{{profileEdit.availableTime['4'].from | m2h}}</span>
+                      <select class="form-control" name="self4" [(ngModel)]="profileEdit.availableTime['4'].from" [hidden]="!editFields.available">
+                        <option *ngFor="let m of minutes" [ngValue]="m.value">{{m.text}}</option>
+                      </select>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-group">
+                      <span [hidden]="editFields.available">{{profileEdit.availableTime['4'].to | m2h}}</span>
+                      <select class="form-control" name="selt4" [(ngModel)]="profileEdit.availableTime['4'].to" [hidden]="!editFields.available">
+                        <option *ngFor="let m of minutes" [ngValue]="m.value">{{m.text}}</option>
+                      </select>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong translate>Friday</strong>
+                  </td>
+                  <td>
+                    <div class="form-group">
+                      <span [hidden]="editFields.available">
+                        <span class="badge badge-success" *ngIf="profile.availableTime['5'].available" translate>Yes</span>
+                        <span class="badge badge-danger" *ngIf="!profile.availableTime['5'].available" translate>No</span>
+                      </span>
+                      <label [hidden]="!editFields.available">
+                        <input type="checkbox" [(ngModel)]="profileEdit.availableTime['5'].available" name="c5" />
+                      </label>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-group">
+                      <span [hidden]="editFields.available">{{profileEdit.availableTime['5'].from | m2h}}</span>
+                      <select class="form-control" name="self5" [(ngModel)]="profileEdit.availableTime['4'].from" [hidden]="!editFields.available">
+                        <option *ngFor="let m of minutes" [ngValue]="m.value">{{m.text}}</option>
+                      </select>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-group">
+                      <span [hidden]="editFields.available">{{profileEdit.availableTime['5'].to | m2h}}</span>
+                      <select class="form-control" name="seft5" [(ngModel)]="profileEdit.availableTime['5'].to" [hidden]="!editFields.available">
+                        <option *ngFor="let m of minutes" [ngValue]="m.value">{{m.text}}</option>
+                      </select>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong translate>Saturday</strong>
+                  </td>
+                  <td>
+                    <div class="form-group">
+                      <span [hidden]="editFields.available">
+                        <span class="badge badge-success" *ngIf="profile.availableTime['6'].available" translate>Yes</span>
+                        <span class="badge badge-danger" *ngIf="!profile.availableTime['6'].available" translate>No</span>
+                      </span>
+                      <label [hidden]="!editFields.available">
+                        <input type="checkbox" [(ngModel)]="profileEdit.availableTime['6'].available" name="c6" />
+                      </label>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-group">
+                      <span [hidden]="editFields.available">{{profileEdit.availableTime['6'].from | m2h}}</span>
+                      <select class="form-control" name="self6" [(ngModel)]="profileEdit.availableTime['6'].from" [hidden]="!editFields.available">
+                        <option *ngFor="let m of minutes" [ngValue]="m.value">{{m.text}}</option>
+                      </select>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-group">
+                      <span [hidden]="editFields.available">{{profileEdit.availableTime['6'].to | m2h}}</span>
+                      <select class="form-control" name="selt6" [(ngModel)]="profileEdit.availableTime['6'].to" [hidden]="!editFields.available">
+                        <option *ngFor="let m of minutes" [ngValue]="m.value">{{m.text}}</option>
+                      </select>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,65 @@
+<div class="container">
+  <div class="hea-top-main">
+    <h3 *ngIf="title">{{title|translate}}</h3>
+    <div class="pull-right">
+      <select class="select-1" (change)="changeSort('minRate', $event)" name="priceSort">
+        <option value="" disabled selected translate>PRICE</option>
+        <option value="asc" translate>LOWEST TO HIGHEST</option>
+        <option value="desc" translate>HIGHEST TO LOWEST</option>
+      </select>
+      <select class="select-1" (change)="changeSort('age', $event)" name="age">
+        <option value="" disabled selected translate>AGE</option>
+        <option value="asc" translate>LOWEST TO HIGHEST</option>
+        <option value="desc" translate>HIGHEST TO LOWEST</option>
+      </select>
+      <select class="select-1" (change)="changeSort('ratingAvg', $event)" name="rating">
+        <option value="" disabled selected translate>RATINGS</option>
+        <option value="asc" translate>LOWEST TO HIGHEST</option>
+        <option value="desc" translate>HIGHEST TO LOWEST</option>
+      </select>
+    </div>
+  </div>
+  <div class="list-model row">
+    <div class="col-sm-4 col-md-3" *ngFor="let item of items">
+      <div class="item-model">
+        <div class="pic-model">
+          <img [src]="item.avatarUrl">
+        </div>
+        <div class="text-model">
+          <div class="title-model">
+            <h3>{{item.username}}
+              <span class="age-item">{{item.age}}</span>
+              <span class="status online"><i class="fa fa-check-circle"></i></span>
+            </h3>
+
+            <span class="phone-item" *ngIf="item.phoneVerified"><img src="/assets/images/phone.png"></span>
+          </div>
+          <div class="price-item">
+            <span *ngIf="item.minRate">{{item?.rates[1]?.price|number}} USD/1h</span>
+            <span *ngIf="!item.minRate">0.00 USD</span>
+          </div>
+          <div class="language-item">
+            <i class="fa fa-map-marker"></i>
+            {{item.baseCity ? item.baseCity : 'N/A'}}
+          </div>
+          <div class="star-v">
+            <div class="list-star">
+              <i class="fa fa-star" [ngClass]="{'active': item.ratingAvg > 0}"></i>
+              <i class="fa fa-star" [ngClass]="{'active': item.ratingAvg > 1}"></i>
+              <i class="fa fa-star" [ngClass]="{'active': item.ratingAvg > 2}"></i>
+              <i class="fa fa-star" [ngClass]="{'active': item.ratingAvg > 3}"></i>
+              <i class="fa fa-star" [ngClass]="{'active': item.ratingAvg > 4}"></i>
+
+              <span class="rating-number" *ngIf="item.ratingAvg">{{item.ratingAvg|number:'1.1'}}</span>
+            </div>
+            <span class="number-review">{{item?.totalRating}} <span translate>reviews</span></span>
+          </div>
+        </div>
+        <a [routerLink]="['/escorts', item.username]"></a>
+      </div>
+    </div>
+  </div>
+  <nav aria-label="Page navigation" [hidden]="total <= take">
+    <ngb-pagination [collectionSize]="total" [(page)]="page" [maxSize]="5" (pageChange)="doQuery()"></ngb-pagination>
+  </nav>
+</div>

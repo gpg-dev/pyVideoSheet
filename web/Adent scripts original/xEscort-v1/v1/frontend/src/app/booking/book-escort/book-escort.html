@@ -1,0 +1,100 @@
+<h3 class="text-center"><span translate>Booking</span> <span>{{escort?.username}}</span></h3>
+<div class="card">
+  <div class="card-body">
+    <div class="row">
+      <div class="col col-md-9">
+        <form class="form" (submit)="book(frm)" #frm="ngForm">
+          <div class="row">
+            <div class="col- col-md-6">
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label" translate>Name</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" placeholder="Name" [(ngModel)]="booking.name" name="name" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label" translate>Phone number</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" placeholder="{{'Your phone number'|translate}}" [(ngModel)]="booking.phoneNumber" name="phoneNumber" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label" translate>Email</label>
+                <div class="col-sm-9">
+                  <input type="email" class="form-control" placeholder="{{'Email'|translate}}" [(ngModel)]="booking.email" name="email" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label" translate>City</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" placeholder="{{'City'|translate}}" [(ngModel)]="booking.city" name="city" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label" translate>Date</label>
+                <div class="col-sm-9">
+                  <div class="input-group">
+                    <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="date" [minDate]="{year: minYear, month: minMonth, day: minDate}" ngbDatepicker #d="ngbDatepicker">
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
+                        <i class="fa fa-calendar"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label" translate>Start time</label>
+                <div class="col-sm-9">
+                  <select class="form-control" [(ngModel)]="booking.startTime" name="statTime">
+                    <option *ngFor="let min of minutes" [value]="min.value">{{min.text}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label" translate>Duration</label>
+                <div class="col-sm-9">
+                  <select class="form-control" name="duration" [(ngModel)]="booking.duration">
+                    <option *ngFor="let rate of escort?.rates" [value]="rate.duration">{{rate.text}}</option>
+                    <option value="other" translate>Other</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label" translate>Preferred by</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" placeholder="{{'Enter your preferred name'|translate}}" name="preferred" [(ngModel)]="booking.preferredBy" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label" translate>Clothing style</label>
+                <div class="col-sm-9">
+                  <select name="clothingStyle" class="form-control" [(ngModel)]="booking.clothingStyle">
+                    <option value="Vintage" translate>Vintage</option>
+                    <option value="Classic" translate>Classic</option>
+                    <option value="Sexy" translate>Sexy</option>
+                    <option value="Other" translate>Other</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label" translate>Message</label>
+                <div class="col-sm-9">
+                  <textarea placeholder="{{'Enter your message'|translate}}" class="form-control" name="message" [(ngModel)]="booking.message"></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="col col-md-12">
+              <button type="submit" class="btn btn-primary" translate>Send booking</button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="col-md-3">
+        <img [src]="escort?.avatarUrl" class="mobile-top-30" width="100%" />
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,15 @@
+<div class="row page-titles">
+  <div class="col-md-5 align-self-center">
+    <h4 class="text-themecolor">{{pageInfo?.title | translate}}</h4>
+  </div>
+  <div class="col-md-7 align-self-center">
+    <ol class="breadcrumb pull-right">
+      <ng-template ngFor let-url [ngForOf]="pageInfo?.urls" let-last="last">
+        <li class="breadcrumb-item" *ngIf="!last" [routerLink]="url.url">
+          <a href='javascript:void(0)' translate>{{url.title | translate}}</a>
+        </li>
+        <li class="breadcrumb-item active" *ngIf="last">{{url.title | translate}}</li>
+      </ng-template>
+    </ol>
+  </div>
+</div>

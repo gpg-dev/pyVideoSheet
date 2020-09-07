@@ -1,0 +1,51 @@
+<div class="card">
+  <div class="card-block table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>User</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Price</th>
+          <th>Payment gateway</th>
+          <th>Create At</th>
+        </tr>
+        <tr>
+          <th colspan="2">
+            <div class="input-group mb-3">
+              <select class="form-control" name="filterType" [(ngModel)]="searchFields.type">
+                <option value="">Select type</option>
+                <option value="escort_subscription">Escort monthly subscription</option>
+                <option value="user_subscription">User monthly subscription</option>
+                <option value="booking">Booking escort</option>
+              </select>
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button" (click)="query()">Filter</button>
+              </div>
+            </div>
+          </th>
+          <th colspan="4"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of items">
+          <td>{{item.user ? (item.user?.username || item.user?.email) : 'N/A'}}</td>
+          <td>{{item.type}}</td>
+          <td>{{item.description}}</td>
+          <td>{{item.price}}</td>
+          <td>{{item.paymentGateway}}</td>
+          <td>{{item.createdAt | date}}</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="6">
+            <ngb-pagination *ngIf="total > pageSize" [collectionSize]="total" [(page)]="page" [pageSize]="pageSize"
+                [maxSize]="5"
+                (pageChange)="doQuery()"></ngb-pagination>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>

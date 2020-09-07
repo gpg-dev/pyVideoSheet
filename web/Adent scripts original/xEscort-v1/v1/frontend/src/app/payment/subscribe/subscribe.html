@@ -1,0 +1,23 @@
+<div *ngIf="currentUser?.type === 'escort'">
+  <p *ngIf="!currentUser?.featured">
+    <span translate>Subscribe for featured package. Your profile will be on top.</span>
+    <button class="btn btn-info" (click)="subscribeFeatured()"><i class="fa fa-usd"></i>{{appConfig?.subscriptionEscortPrice}} <span>Subscribe</span></button>
+  </p>
+
+  <p *ngIf="currentUser?.featured">
+    <span translate>Your subscription recurring is enabled. Next billing</span> {{currentUser.featuredTo|date}}
+  </p>
+</div>
+
+<div *ngIf="currentUser?.type === 'user'">
+  <p *ngIf="!currentUser?.subscribed">
+    <span translate>To Unlock Membership features - you pay this subscription fee. It gives you Unlimited access to Escort Phone numbers and other premium features.</span>
+    <button class="btn btn-info" (click)="subscribeFeatured()"><i class="fa fa-usd"></i>{{appConfig?.subscriptionUserPrice}} <span translate>Subscribe</span></button>
+  </p>
+
+  <p *ngIf="currentUser?.subscribed">
+    <span translate>Your subscription recurring is enabled. Next billing</span> {{currentUser.subscribeTo|date}}
+  </p>
+</div>
+
+<invoices></invoices>

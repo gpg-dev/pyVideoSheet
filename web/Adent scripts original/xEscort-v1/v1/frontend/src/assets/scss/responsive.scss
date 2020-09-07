@@ -1,0 +1,163 @@
+@media all and (max-width: 1400px) {}
+
+@media all and (max-width: 1300px) {}
+
+@media all and (max-width: 1000px) {}
+
+@media all and (max-width: 767px) {
+  .mobile-top-30 {
+    margin-top: 30px;
+  }
+  .header {
+    padding: 15px;
+  }
+  .right-header {
+    margin-top: 10px;
+  }
+  .hea-top-main {
+    h3 {
+      float: none;
+      font-size: 22px;
+      text-align: center;
+    }
+    .pull-right {
+      float: none;
+    }
+    select {
+      display: inline-block;
+      width: 100%;
+      margin: 5px;
+      max-width: 45%;
+      float: none;
+    }
+  }
+  .search-filter {
+    display: block;
+    width: 100%;
+    margin: 0px;
+  }
+  .item-model {
+    width: 300px;
+    max-width: 100%;
+    margin: 10px auto;
+  }
+  .form-search {
+    margin-top: 100px;
+  }
+  .logo img {
+    width: 80px;
+  }
+  .form-input-s {
+    margin-bottom: 10px;
+  }
+  .title-main h2 {
+    font-size: 20px;
+  }
+  .copy-right, .bottom-footer .social-media {
+    float: none;
+    text-align: center;
+  }
+  .copy-right {
+    margin-bottom: 5px;
+  }
+  .estcort-main {
+    padding: 50px 0px;
+    h2 {
+      font-size: 25px;
+    }
+  }
+  .bg-search .text-right {
+    text-align: left !important;
+  }
+  .filter-search {
+    .pull-left, .pull-right {
+      float: none;
+    }
+  }
+  .bg-search {
+    padding: 15px 10px;
+  }
+  .banner {
+    height: auto;
+    padding-bottom: 30px;
+  }
+  .txt-estcort {
+    padding: 0px 15px;
+    p {
+      font-size: 15px;
+    }
+  }
+  .title-detail {
+    .pull-left, .pull-right {
+      float: none;
+    }
+  }
+  .table {
+    display: block;
+    overflow: auto;
+  }
+  .table-comment {
+    display: block;
+    tr {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+      margin-bottom: 5px;
+    }
+    tbody {
+      display: block;
+      width: 100%;
+    }
+    tr td {
+      display: block;
+      border: 0px;
+      padding: 0px 5px;
+    }
+  }
+  .header-inner .nav-click {
+    display: block;
+    span {
+      background: #666;
+    }
+  }
+  .menu-top {
+    float: none;
+    position: absolute;
+    top: 100%;
+    right: 0px;
+    width: 250px;
+    // height: 100%;
+    background: #eee;
+    padding: 20px;
+    margin: 0px;
+    display: none;
+    z-index: 1000;
+    border-radius: 5px;
+    ul li {
+      float: none;
+      a {
+        padding: 10px 0px;
+        display: block;
+      }
+    }
+  }
+  .menu-top.show {
+    display: block;
+  }
+  select {
+    background: none;
+  }
+  .slider-for {
+    .item-pic {
+      .upload-avatar {
+        top: unset;
+        bottom: 0;
+      }
+    }
+  }
+
+}
+
+@media all and (min-width: 768px) and (max-width: 1100px) {}

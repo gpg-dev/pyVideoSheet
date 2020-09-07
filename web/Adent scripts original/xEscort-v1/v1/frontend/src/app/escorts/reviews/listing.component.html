@@ -1,0 +1,30 @@
+<div class="modal-header">
+  <h4 class="modal-title rating-title" translate>
+    Reviews Listing
+  </h4>
+</div>
+<div class="modal-body">
+  <table class="table-comment">
+    <tbody>
+      <tr *ngFor="let item of items">
+        <td>{{item.updatedAt | date: 'medium'}}</td>
+        <td><a href="#"><strong>{{item.rater ? item.rater.name : 'anonymous'}}</strong></a></td>
+        <td>
+          <div class="list-star">
+            <i class="fa fa-star" [ngClass]="{'active': item.rating > 0}"></i>
+            <i class="fa fa-star" [ngClass]="{'active': item.rating > 1}"></i>
+            <i class="fa fa-star" [ngClass]="{'active': item.rating > 2}"></i>
+            <i class="fa fa-star" [ngClass]="{'active': item.rating > 3}"></i>
+            <i class="fa fa-star" [ngClass]="{'active': item.rating > 4}"></i>
+          </div>
+        </td>
+        <td>{{item?.comment}}</td>
+
+      </tr>
+    </tbody>
+  </table>
+  <ngb-pagination *ngIf="total > pageSize" [collectionSize]="total" [(page)]="page" [pageSize]="pageSize" [maxSize]="5" (pageChange)="doQuery()"></ngb-pagination>
+</div>
+<div class="modal-footer">
+  <div class="btn btn-primary pull-right" (click)="activeModal.close('Close click')">Cancel</div>
+</div>

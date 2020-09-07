@@ -1,0 +1,40 @@
+<div class="row">
+  <div class="col-sm-6 col-md-4">
+    <div class="ad-login">
+      <div class="txt-ad-login">
+        <h3 translate>NEW ESCORT ACCOUNT</h3>
+        <a [routerLink]="['/auth/signup/escort']" class="join-us" translate>SIGN UP</a>
+      </div>
+      <div class="pic-ad-login bg-cover" style="background-image: url(/assets/images/img.jpg);"></div>
+    </div>
+    <div class="ad-login ad-1">
+      <div class="txt-ad-login">
+        <h3 translate>NEW REGULAR MEMBER ACCOUNT</h3>
+        <a [routerLink]="['/auth/signup/user']" class="join-us" translate>SIGN UP</a>
+      </div>
+      <div class="pic-ad-login bg-cover" style="background-image: url(/assets/images/img1.jpg);"></div>
+    </div>
+  </div>
+
+  <div class="col-sm-6 col-md-8">
+    <div class="sign-box">
+      <form class="form-horizontal form-material" (submit)="submit()">
+        <h4 class="box-title m-b-20 title-form" translate>Have trouble with the password?</h4>
+        <div class="row">
+          <div class="col-sm-8">
+            <div class="form-group ">
+              <div class="col-xs-12">
+                <input class="form-control" placeholder="Email" type="text" autocomplete="off" name="email" [(ngModel)]="credentials.email" required #email="ngModel" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" />
+                <div *ngIf="email.errors && (email.dirty || email.touched || submitted)">
+                  <p [hidden]="!email.errors.required" class="error" translate>Email is required</p>
+                  <p [hidden]="!email.errors.pattern" class="error" translate>Email is invalid format</p>
+                </div>
+              </div>
+            </div>
+            <button class="btn btn-danger text-uppercase waves-effect waves-light" type="submit" translate>Submit</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

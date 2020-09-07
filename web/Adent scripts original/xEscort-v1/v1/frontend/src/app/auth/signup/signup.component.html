@@ -1,0 +1,145 @@
+<div class="justify-content-center">
+  <div class="sign-box signup-box">
+    <h3 translate>Enter your account</h3>
+    <div class="row">
+      <div class="col col-md-6" *ngIf="!confirmPhone">
+        <form #frm="ngForm" (submit)="submit(frm)">
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="{{'Username'|translate}}" required #username="ngModel" name="username" [(ngModel)]="account.username" />
+            <div *ngIf="username.errors && (username.dirty || username.touched || submitted)">
+              <p [hidden]="!username.errors.required" class="error" translate>Username is required</p>
+            </div>
+          </div>
+          <div class="form-group" *ngIf="account.type === 'escort'">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <div ngbDropdown class="d-inline-block">
+                  <button class="btn btn-outline-secondary dropdown-toggle flag-dropdown" type="button" id="dropdownDialCode" ngbDropdownToggle>
+                    <img class="flag" [src]="flag" /> {{account.dialCode}}
+                  </button>
+                  <div ngbDropdownMenu aria-labelledby="dropdownDialCode" class="flags-dropdown">
+                    <button class="dropdown-item flags" type="button" *ngFor="let dial of dialCodes" (click)="selectDial(dial)">
+                      <img class="flag" [src]="'/assets/images/flags/' + dial.code.toLowerCase() + '.svg'" />
+                      <span> {{dial.dialCode}}</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <input type="text" class="form-control" placeholder="987654321" pattern="\d*" (keypress)="onlyNumberKey($event)" maxlength="10" minlength="10" [(ngModel)]="account.phoneNumber" required name="phoneNumber" #phone="ngModel" />
+            </div>
+            <div *ngIf="phone.errors && (phone.dirty || phone.touched || submitted)">
+              <p [hidden]="!phone.errors.pattern" class="error" translate>Phone must be number</p>
+              <p [hidden]="!phone.errors.maxlength" class="error" translate>Phone number max length is 10 characters</p>
+              <p [hidden]="!phone.errors.minlength" class="error" translate>Phone number length is 10 characters</p>
+              <p [hidden]="!phone.errors.required" class="error" translate>Phone number is required</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col col-md-6">
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="{{'Email address'|translate}}" #email="ngModel" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" name="email" required [(ngModel)]="account.email" />
+                <div *ngIf="email.errors && (email.dirty || email.touched || submitted)">
+                  <p [hidden]="!email.errors.required" class="error" translate>
+                    Email is required
+                  </p>
+                  <p [hidden]="!email.errors.pattern" class="error" translate>
+                    Email is invalid format
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col col-md-6">
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="{{'Confirm email address'|translate}}" #reemail="ngModel" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" name="email" required [(ngModel)]="confirm.reemail" />
+                <div *ngIf="reemail.errors && (reemail.dirty || reemail.touched || submitted)">
+                  <p [hidden]="!reemail.errors.required" class="error" translate>
+                    Confirm email is required
+                  </p>
+                  <p [hidden]="!reemail.errors.pattern" class="error" translate>
+                    Confirm email is invalid format
+                  </p>
+                </div>
+                <p class="error" *ngIf="account.email !== confirm.reemail && submitted" translate>
+                  Confirm email is not match
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col col-md-6">
+              <div class="form-group">
+                <input type="password" class="form-control" placeholder="{{'Password'|translate}}" [minlength]="6" #password="ngModel" required name="password" [(ngModel)]="account.password" />
+                <div *ngIf="password.errors && (password.dirty || password.touched || submitted)">
+                  <p [hidden]="!password.errors.minlength" class="error" translate>
+                    Password must from 6 characters
+                  </p>
+                  <p [hidden]="!password.errors.required" class="error" translate>
+                    Password is requried
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <input type="password" class="form-control" placeholder="{{'Confirm Password'|translate}}" [minlength]="6" #repassword="ngModel" required name="repassword" [(ngModel)]="confirm.repassword" />
+                <div *ngIf="repassword.errors && (repassword.dirty || repassword.touched || submitted)">
+                  <p [hidden]="!repassword.errors.minlength" class="error" translate>
+                    Confirm Password must from 6 characters
+                  </p>
+                  <p [hidden]="!repassword.errors.required" class="error" translate>
+                    Confirm Password is requried
+                  </p>
+                </div>
+                <p class="error" *ngIf="account.password !== confirm.repassword && submitted" translate>
+                  Confirm password is not match
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>
+              <input type="checkbox" name="accept" #accept="ngModel" [(ngModel)]="confirm.accept" required value="1" />
+              <span translate>I have read and I agree with the general terms & conditions</span>
+            </label>
+            <div *ngIf="accept.errors && (accept.dirty || accept.touched || submitted)">
+              <p [hidden]="!accept.errors.required" class="error" translate>
+                You must agree with our conditions
+              </p>
+            </div>
+
+            <p>
+              <button class="btn btn-danger" type="submit" translate>Sign up</button>
+            </p>
+          </div>
+        </form>
+      </div>
+      <div class="col-md-6" *ngIf="confirmPhone">
+        <h3 translate>Verify code</h3>
+        <form #frm2="ngForm" (submit)="verifyPhone(frm2)">
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="{{'Enter verify code'|translate}}" required [(ngModel)]="verificationCode" #code="ngModel" name="verificationCode" />
+            <div class="input-group-append">
+              <button class="btn btn-outline-success" type="submit" translate>Verify</button>
+            </div>
+          </div>
+          <div *ngIf="code.errors && (code.dirty || code.touched)">
+            <p [hidden]="!code.errors.required" class="error">
+              <span translate>Verification code is requried</span>
+            </p>
+          </div>
+          <p class="help" translate>You can verify here or login and verify your phone</p>
+        </form>
+      </div>
+      <div class="col-md-6">
+        <ul class="list-2">
+          <li translate>Fill in the form above</li>
+          <li translate>Confirm your account from the activation email</li>
+          <li translate>Login, complete your agency profile and add your models!</li>
+          <li translate>Get clients!</li>
+        </ul>
+        <span translate>If you have any questions, please</span> <a href="#" translate>contact us</a>.
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,49 @@
+<div class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-5">
+        <img [src]="appConfig?.siteLogo || '/assets/images/logo.png'" class="logo">
+        <div class="info-footer">
+          <p *ngIf="appConfig?.address"><span translate>Address</span> {{appConfig?.address}}</p>
+          <p *ngIf="appConfig?.hotline"><span translate>Hotline</span> {{appConfig?.hotline}}</p>
+          <p *ngIf="appConfig?.contactEmail"><span translate>Email</span> {{appConfig?.contactEmail}}</p>
+        </div>
+      </div>
+      <div class="col-sm-3 list-menu">
+        <ul>
+          <h3 translate>QUICK-CAST</h3>
+          <li><a [routerLink]="['/auth/signup/escort']" translate>Join us</a></li>
+          <li><a [routerLink]="['/auth/login']" translate>Login</a></li>
+          <li><a [routerLink]="['/auth/signup/user']" translate>Sign up</a></li>
+        </ul>
+      </div>
+      <div class="col-sm-4">
+        <h3 translate>About us</h3>
+        <p [innerHTML]="appConfig?.aboutFooter"></p>
+        <ul>
+          <li>
+            <span *ngFor="let lang of languages" class="lang" [ngClass]="{active: userLang === lang.key}" (click)="changeLang(lang.key)">
+              <img [src]="'/assets/images/flags/' + lang.key + '.svg'" [alt]="lang.name" />
+            </span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="bottom-footer">
+  <div class="container">
+    <div class="copy-right">
+      Copyright © 2018 - build 3 <a [routerLink]="['/']">{{appConfig?.siteName}}</a>
+    </div>
+    <div class="social-media">
+      <li *ngIf="appConfig?.facebookLink"><a [href]="appConfig?.facebookLink"><i class="fa fa-facebook"></i></a></li>
+      <li *ngIf="appConfig?.twitterLink"><a [href]="appConfig?.twitterLink"><i class="fa fa-twitter"></i></a></li>
+      <li *ngIf="appConfig?.linkedLink"><a [href]="appConfig?.linkedLink"><i class="fa fa-linkedin"></i></a></li>
+    </div>
+  </div>
+</div>
+
+<div class="go-top" (click)="goTop()"><i class="fa fa-angle-up"></i></div>

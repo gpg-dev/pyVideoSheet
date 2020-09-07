@@ -1,0 +1,13 @@
+{% extends '../layouts/default.html' %}
+
+{% block content %}
+<p>Hello {{escort.username || escort.name}}</p>
+
+<p>Your featured subscription package was updated successully.</p>
+
+<p>
+  <strong>Price: </strong> ${{invoice.price}} <br />
+  <strong>Description: </strong> {{invoice.description}}
+</p>
+
+{% endblock %}

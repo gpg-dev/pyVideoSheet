@@ -1,0 +1,25 @@
+<div class="banner">
+  <div class="bg-cover bg-screen" style="background-image: url(/assets/images/bg-home.jpg);"></div>
+  <search-bar></search-bar>
+</div>
+
+<div class="padding-main" [hidden]="hideFeatured">
+  <div class="title-main">
+    <h2 translate>Featured escorts</h2>
+    <p translate>Find our featured escorts</p>
+  </div>
+  <list-escorts [filter]="'featured'" [title]="'Top Models'" (onQueryDone)="queryDone('featured', $event)"></list-escorts>
+</div>
+
+<div class="padding-main bg-blue" [hidden]="hideLatest">
+  <list-escorts [filter]="'latest'" [title]="'Latest Added'" (onQueryDone)="queryDone('latest', $event)"></list-escorts>
+</div>
+
+<div class="estcort-main">
+  <div class="bg-cover bg-screen" style="background-image: url(/assets/images/bg1.jpg);"></div>
+  <div class="txt-estcort">
+    <h2 translate>Escort Wanted!</h2>
+    <p translate>Unlock Escort phone numbers by paying a small fee.</p>
+    <a class="join-us" [routerLink]="['/auth/signup/escort']" translate>JOIN US</a>
+  </div>
+</div>

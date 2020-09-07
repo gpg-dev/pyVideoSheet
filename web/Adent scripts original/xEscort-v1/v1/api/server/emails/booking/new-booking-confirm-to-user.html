@@ -1,0 +1,20 @@
+{% extends '../layouts/default.html' %}
+
+{% block content %}
+<p>Hello</p>
+
+<p>You have booked {{escort.username || escort.name}}. Please find information below.</p>
+
+<p>
+  <strong>Escort: </strong> {{escort.username || escort.name}} <br />
+  <strong>Name: </strong> {{booking.name}} <br />
+  <strong>Phone number: </strong> {{booking.phoneNumber}} <br />
+  <strong>Email: </strong> {{booking.email}} <br />
+  <strong>City: </strong> {{booking.city}} <br />
+  <strong>Clothing style: </strong> {{booking.clothingStyle}} <br />
+  <strong>Preferred by: </strong> {{booking.preferredBy}} <br />
+  <strong>Date: </strong> {{date}} - {{time}} <br />
+  <strong>Message: </strong> {{booking.message}}
+</p>
+
+{% endblock %}

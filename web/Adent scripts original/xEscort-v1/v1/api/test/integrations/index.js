@@ -1,0 +1,11 @@
+require('./config.controller');
+require('./auth.controller');
+require('./user.controller');
+require('./post.controller');
+require('./media.controller');
+require('./banner.controller');
+require('./newsletter.controller');
+require('./contact.controller');
+require('./i18n.controller');
+await DB.Transaction.remove();
+await DB.Booking.remove();

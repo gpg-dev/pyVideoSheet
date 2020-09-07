@@ -1,0 +1,46 @@
+<div class="modal-header">
+  <h4 class="modal-title" translate>Change phone number</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form method="post" #frm="ngForm" (submit)="changePhone(frm)" *ngIf="!confirmCode">
+    <div class="form-group">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <div ngbDropdown class="d-inline-block">
+            <button class="btn btn-outline-secondary dropdown-toggle flag-dropdown" type="button" id="dropdownDialCode2" ngbDropdownToggle (click)="open = !open">
+              <img class="flag" [src]="flag" /> {{dialCode}}
+            </button>
+            <div ngbDropdownMenu aria-labelledby="dropdownDialCode2" class="flags-dropdown" [hidden]="!open">
+              <button class="dropdown-item flags" type="button" *ngFor="let dial of dialCodes" (click)="selectDial(dial)">
+                <img class="flag" [src]="'/assets/images/flags/' + dial.code.toLowerCase() + '.svg'" />
+                <span> {{dial.dialCode}}</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <input type="text" class="form-control" placeholder="987654321" [(ngModel)]="phoneNumber" required name="phoneNumber" #phone="ngModel" />
+      </div>
+
+      <div *ngIf="phone.errors && (phone.dirty || phone.touched || submitted)">
+        <p [hidden]="!phone.errors.required" class="error" translate>Phone number is required</p>
+      </div>
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-primaty" translate>Change</button>
+    </div>
+  </form>
+  <form method="post" #frm2="ngForm" (submit)="confirm(frm2)" *ngIf="confirmCode">
+    <div class="input-group mb-3">
+      <input type="text" class="form-control" placeholder="{{'Enter verify code'|translate}}" required [(ngModel)]="verificationCode" #code="ngModel" name="verificationCode" />
+      <div class="input-group-append">
+        <button class="btn btn-outline-secondary" type="submit" translate>Verify</button>
+      </div>
+    </div>
+    <div *ngIf="code.errors && (code.dirty || code.touched)">
+      <p [hidden]="!code.errors.required" class="error" translate>Code is required</p>
+    </div>
+  </form>
+</div>

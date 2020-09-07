@@ -1,0 +1,10 @@
+/node_modules
+/vendor
+/vendor/*
+.env
+composer.lock
+.idea
+.idea/*
+/.idea
+/.idea/*
+/nbproject/private/

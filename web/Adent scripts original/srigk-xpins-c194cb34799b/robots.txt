@@ -1,0 +1,7 @@
+User-Agent: *
+Disallow: /admincp/
+Disallow: /cache/
+Disallow: /include/
+Disallow: /js/
+Disallow: /templates/
+Disallow: /db.php
