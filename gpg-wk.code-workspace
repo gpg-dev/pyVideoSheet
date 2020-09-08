@@ -2,6 +2,12 @@
     "folders": [
 		{
 			"path": "bash"
+		},
+		{
+			"path": "pyVideoSheet"
+		},
+		{
+			"path": "video-thumbnail-generator"
 		}
 	],
 	"settings": {
