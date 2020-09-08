@@ -21,9 +21,7 @@ donedir="$HOME/Videos/gpg/cb/done"
 echo "$ts - fflog : - $fflog"     | tee -ai $fflog
 echo "$ts - recdir: - $recdir"    | tee -ai $fflog
 mkdir -vp $recdir           | tee -ai $fflog
-echo "$ts - donedir: - $donedir"    | tee -ai $fflog
-mkdir -vp $donedir           | tee -ai $fflog
-
+hi 
 
 ts1=$ts                                 # now
 fn0="$fn00--$ts1"                       # file name base for .rec.mkv file
@@ -41,21 +39,21 @@ echo "$ts - json  :" | tee -ai $fflog
 res=eval $cmd
 echo  $res | tee -ai $fflog
 
-##if [[-z ($(echo $res )| json error)]]; then
-    #execute live rec command
-    cmd="/usr/bin/python /usr/bin/streamlink -p vlc  chaturbate.com/$1 best -o $ffn1" 
-    echo "$ts - info  : - recording cb stream $1 ..."   | tee -ai $fflog
-    echo                                                | tee -ai $fflog
-    res=eval $cmd                                       | tee -ai $fflog
-    echo  $res                                          | tee -ai $fflog
-##fi
+cmd="/usr/bin/python /usr/bin/streamlink -p vlc  chaturbate.com/$1 best -o $ffn1" 
+
+#execute live rec command
+echo "$ts - info  : - recording cb stream $1 ..."   | tee -ai $fflog
+echo                                                | tee -ai $fflog
+res=eval $cmd                                       | tee -ai $fflog
+echo  $res                                          | tee -ai $fflog
+
 ## get timestamp "now"
 ts="$(date --utc +%Y%m%dT%H%M%S%Z)"     # all timestamps in Zulu (UTC) time
 
 ## after command finished
 echo | tee -ai $fflog
 
-if [[ -f $ffn1 ]]; then
+if [[ -f $ffn1]]; then
     echo "$ts - info  : - end of stream $1\n renaming and moving rec to $donedir" | tee -ai $fflog
     ts2=$ts                                 # now
     fn2="$fn0-$ts2.mkv"
@@ -67,5 +65,3 @@ else
     echo "$ts - info  : - no stream found for $1" | tee -ai $fflog
     echo | tee -ai $fflog
 fi
-
- $res

@@ -21,9 +21,6 @@ donedir="$HOME/Videos/gpg/cb/done"
 echo "$ts - fflog : - $fflog"     | tee -ai $fflog
 echo "$ts - recdir: - $recdir"    | tee -ai $fflog
 mkdir -vp $recdir           | tee -ai $fflog
-echo "$ts - donedir: - $donedir"    | tee -ai $fflog
-mkdir -vp $donedir           | tee -ai $fflog
-
 
 ts1=$ts                                 # now
 fn0="$fn00--$ts1"                       # file name base for .rec.mkv file

@@ -83,7 +83,7 @@ Drew Stokes
 
 ## WRITTEN BY
 
-- rew Stokes
+ - rew Stokes
   - I turn beer into software. Be good humans.
 
 ## Comments

@@ -21,7 +21,7 @@ donedir="$HOME/Videos/gpg/cb/done"
 echo "$ts - fflog : - $fflog"     | tee -ai $fflog
 echo "$ts - recdir: - $recdir"    | tee -ai $fflog
 mkdir -vp $recdir           | tee -ai $fflog
-echo "$ts - donedir: - $donedir"    | tee -ai $fflog
+echo "$ts - donedir: - $recdir"    | tee -ai $fflog
 mkdir -vp $donedir           | tee -ai $fflog
 
 
